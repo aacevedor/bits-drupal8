@@ -1,0 +1,24 @@
+<div class="container-fluid">
+  <div class="container">
+      <div class="row">
+      {% for item in releases.albums.items %}
+        <div class="card col-4" style="width: 18rem;">
+          <img class="card-img-top" src={{item.images[1].url}} alt="Card image cap">
+          <div class="card-body">
+            <h4 class="card-title">{{item.name}} ({{item.album_type}})</h4>
+            <span>Release date: {{ item.release_date }}</span>
+            <h6>Related Artits:</h6>
+            <ul>
+              {% for artist in item.artists %}
+                <li *ngFor="let artist of item.artists">
+                    <span>{{ artist.name }} </span>
+                    <a href="/artist/{{artist.id}}">Show Details</a>
+                </li>
+              </ul>
+            {% endfor %}
+          </div>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
