@@ -15,6 +15,7 @@ class CallbackController extends ControllerBase{
     $token = '';
     $code = '';
     $releases = '';
+    $host = \Drupal::request()->getHost();
 
     if( \Drupal::request()->query->get('code') ){
       $client = \Drupal::httpClient();
@@ -26,7 +27,7 @@ class CallbackController extends ControllerBase{
         'form_params' => [
           'grant_type' => 'authorization_code',
           'code'=> $code,
-          'redirect_uri'=> 'http://drupal.bitsamericas/callback',
+          'redirect_uri' => 'http://'.$host.'/callback',
           'client_id'=>'366426de773243b6b429568267c85c3c',
           'client_secret'=>'d0f58910a4a64e49bcba5317596ad478',
         ]
