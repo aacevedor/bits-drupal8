@@ -5,3 +5,4 @@ indexcol.form:
     _form: '\Drupal\indexcol\Form\IndexColForm'
   requirements:
     _permission: 'access content'
+ 
