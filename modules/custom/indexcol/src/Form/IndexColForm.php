@@ -20,9 +20,10 @@ class IndexColForm extends FormBase {
 
   /**
    * {@inheritdoc}
+   * Este metodo contruye el formulario usando el api de Drupal 8.
+   * El formualrio se construye con dos campos, cada campo raliza un filtro sobre el JSON usando el campo userId o albumId segun corresponda.
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-
 
     $posts = $this->getListPosts();
     $ids = array(0=>'--select--');
@@ -30,11 +31,9 @@ class IndexColForm extends FormBase {
         return $posts->userId;
     }, $posts));
 
-
     foreach( $ids_posts as $key => $id){
       $ids[$id] = $id;
     }
-
 
     $form['search_post'] = [
         '#type' => 'select',
@@ -47,17 +46,16 @@ class IndexColForm extends FormBase {
         ],
       ];
 
-      $form['show_slide'] = [
-          '#type' => 'select',
-          '#options' => $ids,
-          '#title' => 'Show Slide by id',
-          // '#submit' => array(array($this, 'searchById')),
-          '#ajax' => [
-            'callback' => [$this, 'showOrbit'],
-            'wrapper' => 'response',
-            'effect' => 'fade',
-          ],
-        ];
+    $form['show_slide'] = [
+        '#type' => 'select',
+        '#options' => $ids,
+        '#title' => 'Show Slide by id',
+        '#ajax' => [
+          'callback' => [$this, 'showOrbit'],
+          'wrapper' => 'response',
+          'effect' => 'fade',
+        ],
+      ];
 
     $form['response'] = [
         '#type' => 'container',
@@ -70,6 +68,7 @@ class IndexColForm extends FormBase {
 
   /**
    * {@inheritdoc}
+   * Metodo validateForm se usa para validar la informacion que se envia, si la informacion no es valida retorna un mensaje de advertencia.
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     if (strlen($form_state->getValue('search_post')) <= 0 || $form_state->getValue('search_post') == 0 ) {
@@ -79,11 +78,15 @@ class IndexColForm extends FormBase {
 
   /**
    * {@inheritdoc}
+   * Se ejecuta cuando la validacion del formulario a sido exitosa, muestra un mensaje informativo.
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     drupal_set_message($this->t('Found results for @id', ['@id' => $form_state->getValue('search_post')]));
   }
 
+  /**
+   * Metodo que obtiene todos los Posts y los converite a un arreglo
+   */
   public function getListPosts(){
     $post_endpoint = 'https://jsonplaceholder.typicode.com/posts';
     $client = \Drupal::httpClient();
@@ -91,6 +94,9 @@ class IndexColForm extends FormBase {
     return json_decode($response->getBody());
   }
 
+  /**
+   * Metodo que obtiene todos las fotos y los converite a un arreglo
+   */
   public function getOrbitElements(){
     $post_endpoint = 'https://jsonplaceholder.typicode.com/photos';
     $client = \Drupal::httpClient();
@@ -98,7 +104,11 @@ class IndexColForm extends FormBase {
     return json_decode($response->getBody());
   }
 
-
+  /**
+   * Funcion callback que controla el change del elemento del formulario search_post
+   * Realiza un filtro sobre el json que retorna el metoodo getListPosts.
+   * Finalmente retorna el elemento response del formulario y en su contenido incluye el html del tpl indexcol.html.twig
+   */
   public function searchById(array &$form, FormStateInterface $form_state){
     $selected_id = $form_state->getValue('search_post');
     $posts = $this->getListPosts();
@@ -117,6 +127,12 @@ class IndexColForm extends FormBase {
 
   }
 
+  /**
+   * Funcion callback que controla el change del elemento del formulario search_post
+   * Realiza un filtro sobre el json que retorna el metoodo getOrbitElements.
+   * Finalmente retorna el elemento response del formulario y en su contenido incluye el html del tpl slider.html.twig
+   * que contiene el codigo HTML necesario para crear el slider basado en boostrap 4
+   */
   function showOrbit(array &$form, FormStateInterface $form_state){
     $photos = $this->getOrbitElements();
     $selected_id = $form_state->getValue('search_post');
