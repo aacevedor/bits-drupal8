@@ -1,0 +1,15 @@
+indexcol.content:
+  path: '/indexcol'
+  defaults:
+    _controller: '\Drupal\indexcol\Controller\IndexColController::content'
+    _title: 'Json Place Holder'
+  requirements:
+    _permission: 'access content'
+
+indexcol.form:
+  path: '/home'
+  defaults:
+    _title: 'Indexcol'
+    _form: '\Drupal\indexcol\Form\IndexColForm'
+  requirements:
+    _permission: 'access content'

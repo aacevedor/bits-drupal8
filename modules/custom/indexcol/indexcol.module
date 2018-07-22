@@ -1,0 +1,8 @@
+<?php
+function indexcol_theme($existing, $type, $theme, $path) {
+  return [
+    'indexcol-posts' => [
+      'variables' => ['posts' => NULL],
+    ],
+  ];
+}

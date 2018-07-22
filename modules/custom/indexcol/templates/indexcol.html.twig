@@ -1,0 +1,13 @@
+
+<div class="">
+{% for post in results %}
+  <div class="">
+    <ul>
+      <li>Title: {{ post.title }}</li>
+      <li>Body: {{ post.body }}</li>
+      <li>id: {{ post.id}}</li>
+      <li>userId: {{ post.userId }}</li>
+    </ul>
+  </div>
+{% endfor %}
+</div>

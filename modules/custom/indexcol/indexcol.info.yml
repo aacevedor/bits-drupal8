@@ -1,0 +1,6 @@
+name: IndexCol Develoment Test
+description: visualize Json content from Json Place Holder
+package: IndexCol
+type: module
+version: 1.0
+core: 8.x

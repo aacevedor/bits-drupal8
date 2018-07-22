@@ -1,6 +1,0 @@
-bits.admin:
-  title: 'Bits Americas'
-  description: 'This page show'
-  parent: system.admin_config_development
-  route_name: bits.content
-  weight: 100
