@@ -1,6 +1,6 @@
 indexcol.admin:
-  title: 'Bits Americas'
+  title: ''
   description: 'This page show'
   parent: system.admin_config_development
-  route_name: indexcol.content
+  route_name: indexcol.form
   weight: 100
